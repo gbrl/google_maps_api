@@ -108,8 +108,9 @@
 
 
            // Create the info window
+           var infowindowContent = "<strong>" + photo["name"] + "</strong>";
            var infowindow = new google.maps.InfoWindow({
-             content: "<strong>"+photo["name"]+"</strong>";
+             content: infowindowContent
            });
 
            // Add event listener for click
