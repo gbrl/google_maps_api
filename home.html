@@ -14,8 +14,6 @@
 
   <script>
 
-      var done_fetching = true;
-
       function showMap() {
 
         var mapDiv = document.getElementById('map');
@@ -62,15 +60,12 @@
         // 500px API
         var photos = [];
         var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",30km";
-        if (done_fetching == true){
-          $.get( api_call_url, function( data ) {
-            done_fetching = false;
-            photos = data["photos"];
-            console.log("Calling 500px API...");
-            fillMap(pos,map,photos);
-          });
-        }
-
+        $.get( api_call_url, function( data ) {
+          photos = data["photos"];
+          console.log("Calling 500px API...");
+          fillMap(pos,map,photos);
+          done_fetching = true;
+        });
       }
 
       function fillMap(pos,map,photos){
@@ -121,9 +116,6 @@
              infowindow.open(map,marker);
            });
          })(photos[i]);
-
-         done_fetching = true;
-
         }
       }
   </script>
