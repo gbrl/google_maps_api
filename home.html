@@ -55,9 +55,9 @@
         var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",20km";
         $.get( api_call_url, function( data ) {
           photos = data["photos"];
+          console.log( photos );
+          buildMap(pos,map,photos);
         });
-        console.log( photos );
-        buildMap(pos,map,photos);
       }
 
       function buildMap(pos,map,photos){
