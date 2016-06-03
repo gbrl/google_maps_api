@@ -18,19 +18,19 @@
   <script>
 
 
-    $(document).ready(function{
+    $(document).ready(function(){
 
         _500px.init({
           sdk_key: '242d8f6e6fe954036a4d0f1ee222fca48181e704'
         });
 
         _500px.api('/photos', { feature: 'popular', page: 1 }, function (response) {
-        console.log(response.data.photos);
-});
-
-
+          console.log(response.data.photos);
+        });
 
     });
+
+
       function showMap() {
 
         var mapDiv = document.getElementById('map');
