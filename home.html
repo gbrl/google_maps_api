@@ -62,7 +62,7 @@
         // 500px API
         var photos = [];
         var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",30km";
-        if (done_fetching){
+        if (done_fetching == true){
           $.get( api_call_url, function( data ) {
             done_fetching = false;
             photos = data["photos"];
@@ -121,10 +121,10 @@
              infowindow.open(map,marker);
            });
          })(photos[i]);
+
+         done_fetching = true;
+
         }
-
-        done_fetching = true;
-
       }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYNOo2ctuuBEv0TANRMBGwE2thFIUNxYU&callback=showMap" async defer></script>
