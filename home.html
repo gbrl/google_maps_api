@@ -28,16 +28,17 @@
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
         // NOW THAT WE HAVE CREATED THE MAP, ADD AN EVENT LISTENER FOR WHEN THE MAP MOVES
-        google.maps.event.addListener(map, "center_changed", function() {
-          var pos = map.getCenter();
-          var lat = map.getCenter().lat();
-          var lng = map.getCenter().lng();
-          fetchImages(lat,lng,pos,map);
-        });
-
+        google.maps.event.addListener(map, "center_changed", _.debounce(getNewCenterAndImages(map), 500));
         getLocation(map);
       }
 
+
+      function getNewCenterAndImages(map){
+        var pos = map.getCenter();
+        var lat = map.getCenter().lat();
+        var lng = map.getCenter().lng();
+        fetchImages(lat,lng,pos,map);
+      }
 
       function getLocation(map) {
 
@@ -117,9 +118,6 @@
            });
          })(photos[i]);
         }
-
-
-
       }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYNOo2ctuuBEv0TANRMBGwE2thFIUNxYU&callback=showMap" async defer></script>
