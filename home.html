@@ -73,14 +73,6 @@
 
         var mapDiv = document.getElementById('map');
 
-        var your_marker = new google.maps.Marker({
-          position: pos,
-          title: "You!"
-        });
-
-        // To add the marker to the map, call setMap();
-        your_marker.setMap(map);
-
         // Shapes define the clickable region of the icon. The type defines an HTML
         // <area> element 'poly' which traces out a polygon as a series of X,Y points.
         // The final coordinate closes the poly by connecting to the first coordinate.
@@ -119,8 +111,6 @@
            var infowindow = new google.maps.InfoWindow({
              content: infowindowContent
            });
-
-            console.log(infowindowContent);
 
            // Add event listener for click
            google.maps.event.addListener(marker, 'click', function() {
