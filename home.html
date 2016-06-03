@@ -43,7 +43,6 @@
               };
               var lat = position.coords.latitude;
               var lng = position.coords.longitude;
-              map.setZoom(13);
               map.setCenter(new google.maps.LatLng(lat,lng));
               fetchImages(lat,lng,pos,map);
           });
@@ -54,7 +53,7 @@
       function fetchImages(lat,lng,pos,map){
         // 500px API
         var photos = [];
-        var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",20km";
+        var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",30km";
         $.get( api_call_url, function( data ) {
           photos = data["photos"];
           console.log( photos );
