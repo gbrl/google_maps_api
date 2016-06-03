@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js"></script>
   <title>GOOGLE MAPS X 500PX MASHUP</title>
 </head>
 <body>
@@ -27,17 +28,16 @@
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
         // NOW THAT WE HAVE CREATED THE MAP, ADD AN EVENT LISTENER FOR WHEN THE MAP MOVES
-        google.maps.event.addListener(map, "center_changed", getNewCenterAndImages(map));
+        google.maps.event.addListener(map, "center_changed", function() {
+          var pos = map.getCenter();
+          var lat = map.getCenter().lat();
+          var lng = map.getCenter().lng();
+          fetchImages(lat,lng,pos,map);
+        });
+
         getLocation(map);
       }
 
-
-      function getNewCenterAndImages(map){
-        var pos = map.getCenter();
-        var lat = map.getCenter().lat();
-        var lng = map.getCenter().lng();
-        fetchImages(lat,lng,pos,map);
-      }
 
       function getLocation(map) {
 
@@ -63,12 +63,12 @@
         $.get( api_call_url, function( data ) {
           photos = data["photos"];
           console.log("Calling 500px API...");
-          fillMap(pos,map,photos);
-          done_fetching = true;
+          _.debounce(buildMap(pos,map,photos), 500);
+
         });
       }
 
-      function fillMap(pos,map,photos){
+      function buildMap(pos,map,photos){
 
         var mapDiv = document.getElementById('map');
 
