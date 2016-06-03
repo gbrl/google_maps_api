@@ -36,7 +36,7 @@
 
         var lat = "";
         var lng = "";
-        
+
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
               pos = {
@@ -55,7 +55,7 @@
             sdk_key: '242d8f6e6fe954036a4d0f1ee222fca48181e704'
           });
 
-          var api_call_url = "photos/search?geo=" + lat + "," + lng + ",20<km>"
+          var api_call_url = "/photos/search?geo=" + lat + "," + lng + ",20<km>"
 
           _500px.api(api_call_url, function (response) {
             console.log(response.data.photos);
