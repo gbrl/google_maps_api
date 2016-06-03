@@ -43,32 +43,23 @@
               var lat = position.coords.latitude;
               var lng = position.coords.longitude;
               map.setZoom(13);
-              buildMap(pos,map);
-              fetchImages(lat,lng);
+              fetchImages(lat,lng,pos,map);
           });
         }
       }
 
 
-      function fetchImages(lat,lng){
+      function fetchImages(lat,lng,pos,map){
         // 500px API
-
-        var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",20km"
-
-        // _500px.api(api_call_url, function (response) {
-        //   console.log(response.data.photos);
-        // });
-
+        var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",20km";
         $.get( api_call_url, function( data ) {
-          console.log( data );
-          alert( "Load was performed." );
+          console.log( data["[photos]"] );
+          var photos = data["photos"];
         });
-
+        buildMap(pos,map,photos);
       }
 
-
-
-      function buildMap(pos,map){
+      function buildMap(pos,map,photos){
 
         var mapDiv = document.getElementById('map');
 
@@ -80,18 +71,9 @@
         // To add the marker to the map, call setMap();
         your_marker.setMap(map);
 
-        var trucks = [];
-        var num_trucks = trucks.length;
+        var num_photos = photos.length;
 
-        var image = {
-            url: '/images/truck.png',
 
-            size: new google.maps.Size(30, 20),
-            // The origin for this image is (0, 0).
-            origin: new google.maps.Point(0, 0),
-            // The anchor for this image is the base of the flagpole at (0, 32).
-            anchor: new google.maps.Point(0, 32)
-        };
         // Shapes define the clickable region of the icon. The type defines an HTML
         // <area> element 'poly' which traces out a polygon as a series of X,Y points.
         // The final coordinate closes the poly by connecting to the first coordinate.
@@ -100,18 +82,28 @@
             type: 'poly'
         };
 
-        for (var i = 1; i < trucks.length; i++) {
-         (function(truck) {
+        for (var i = 1; i < photos.length; i++) {
+         (function(photo) {
+
+           var image = {
+               url: photo["image_url"],
+               size: new google.maps.Size(140, 140),
+               // The origin for this image is (0, 0).
+               origin: new google.maps.Point(0, 0),
+               // The anchor for this image is the base of the flagpole at (0, 32).
+               anchor: new google.maps.Point(140, 140)
+           };
+
            var marker = new google.maps.Marker({
                position: {
-                   lat: truck[1],
-                   lng: truck[2]
+                   lat: photo["latitude"],
+                   lng: photo["longitude"]
                },
                map: map,
                icon: image,
                shape: shape,
-               title: truck[0],
-               zIndex: truck[3]
+               title: photo["name"],
+               zIndex: photo["id"]
            });
 
 
