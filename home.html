@@ -32,7 +32,7 @@
           var pos = map.getCenter();
           var lat = map.getCenter().lat();
           var lng = map.getCenter().lng();
-          fetchImages(lat,lng,pos,map);
+          _.debounce(fetchImages(lat,lng,pos,map), 300));
         });
 
         getLocation(map);
@@ -75,7 +75,7 @@
         // <area> element 'poly' which traces out a polygon as a series of X,Y points.
         // The final coordinate closes the poly by connecting to the first coordinate.
         var shape = {
-            coords: [0,0,140,140],
+            coords: [0,0,70,70],
             type: 'rect'
         };
 
@@ -86,9 +86,9 @@
 
            var image = {
                url: photo["image_url"],
-               size: new google.maps.Size(140, 140),
-               origin: new google.maps.Point(70, 70),
-               anchor: new google.maps.Point(0, 140)
+               size: new google.maps.Size(70, 70),
+               origin: new google.maps.Point(35, 35),
+               anchor: new google.maps.Point(0, 70)
            };
 
            var marker = new google.maps.Marker({
