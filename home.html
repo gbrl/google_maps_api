@@ -5,7 +5,6 @@
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js"></script>
   <title>GOOGLE MAPS X 500PX MASHUP</title>
 </head>
 <body>
@@ -14,6 +13,8 @@
   </div>
 
   <script>
+
+      var done_fetching = true;
 
       function showMap() {
 
@@ -28,7 +29,7 @@
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
         // NOW THAT WE HAVE CREATED THE MAP, ADD AN EVENT LISTENER FOR WHEN THE MAP MOVES
-        google.maps.event.addListener(map, "center_changed", _.debounce(getNewCenterAndImages(map), 500));
+        google.maps.event.addListener(map, "center_changed", getNewCenterAndImages(map));
         getLocation(map);
       }
 
@@ -61,15 +62,18 @@
         // 500px API
         var photos = [];
         var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",30km";
-        $.get( api_call_url, function( data ) {
-          photos = data["photos"];
-          console.log("Calling 500px API...");
-          _.debounce(buildMap(pos,map,photos), 500);
+        if (done_fetching){
+          $.get( api_call_url, function( data ) {
+            done_fetching = false;
+            photos = data["photos"];
+            console.log("Calling 500px API...");
+            fillMap(pos,map,photos);
+          });
+        }
 
-        });
       }
 
-      function buildMap(pos,map,photos){
+      function fillMap(pos,map,photos){
 
         var mapDiv = document.getElementById('map');
 
@@ -118,6 +122,9 @@
            });
          })(photos[i]);
         }
+
+        done_fetching = true;
+
       }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYNOo2ctuuBEv0TANRMBGwE2thFIUNxYU&callback=showMap" async defer></script>
