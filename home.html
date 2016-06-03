@@ -27,6 +27,7 @@
           },
           zoom: 11
         });
+        map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
         getLocation(map);
       }
@@ -43,6 +44,7 @@
               var lat = position.coords.latitude;
               var lng = position.coords.longitude;
               map.setZoom(13);
+              map.setCenter(new google.maps.LatLng(lat,lng));
               fetchImages(lat,lng,pos,map);
           });
         }
