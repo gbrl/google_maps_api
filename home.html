@@ -6,6 +6,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
   <script src="application.js"></script>
+  <script src="500px.js"></script>
+
   <title>GOOGLE MAPS X 500PX MASHUP</title>
 </head>
 <body>
@@ -14,6 +16,21 @@
   </div>
 
   <script>
+
+
+    $(document).ready(function{
+
+        _500px.init({
+          sdk_key: '242d8f6e6fe954036a4d0f1ee222fca48181e704'
+        });
+
+        _500px.api('/photos', { feature: 'popular', page: 1 }, function (response) {
+        console.log(response.data.photos);
+});
+
+
+
+    });
       function showMap() {
 
         var mapDiv = document.getElementById('map');
@@ -24,7 +41,6 @@
           },
           zoom: 11
         });
-
 
         getLocation(map);
       }
