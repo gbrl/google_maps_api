@@ -51,10 +51,11 @@
 
       function fetchImages(lat,lng,pos,map){
         // 500px API
+        var photos = [];
         var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",20km";
         $.get( api_call_url, function( data ) {
           console.log( data["[photos]"] );
-          var photos = data["photos"];
+          photos = data["photos"];
         });
         buildMap(pos,map,photos);
       }
