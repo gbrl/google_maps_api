@@ -29,6 +29,14 @@
         });
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
+        // NOW THAT WE HAVE CREATED THE MAP, ADD AN EVENT LISTENER FOR WHEN THE MAP MOVES
+        google.maps.event.addListener(map, "center_changed", function() {
+          var pos = map.getCenter();
+          var lat = map.getCenter().lat();
+          var lng = map.getCenter().lng();
+          fetchImages(lat,lng,pos,map);
+        });
+
         getLocation(map);
       }
 
