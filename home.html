@@ -113,6 +113,8 @@
              content: infowindowContent
            });
 
+            console.log(infowindowContent);
+
            // Add event listener for click
            google.maps.event.addListener(marker, 'click', function() {
              infowindow.open(map,marker);
