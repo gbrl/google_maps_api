@@ -32,7 +32,7 @@
           var pos = map.getCenter();
           var lat = map.getCenter().lat();
           var lng = map.getCenter().lng();
-          _.debounce(fetchImages(lat,lng,pos,map), 500);
+          fetchImages(lat,lng,pos,map);
         });
 
         getLocation(map);
@@ -63,7 +63,8 @@
         $.get( api_call_url, function( data ) {
           photos = data["photos"];
           console.log("Calling 500px API...");
-          buildMap(pos,map,photos);
+          _.debounce(buildMap(pos,map,photos), 500);
+
         });
       }
 
