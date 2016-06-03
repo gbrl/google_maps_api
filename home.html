@@ -17,20 +17,6 @@
 
   <script>
 
-
-    $(document).ready(function(){
-
-        _500px.init({
-          sdk_key: '242d8f6e6fe954036a4d0f1ee222fca48181e704'
-        });
-
-        _500px.api('/photos', { feature: 'popular', page: 1 }, function (response) {
-          console.log(response.data.photos);
-        });
-
-    });
-
-
       function showMap() {
 
         var mapDiv = document.getElementById('map');
@@ -57,8 +43,21 @@
               map.setZoom(13);
               buildMap(pos,map);
           });
-        }
 
+
+          // 500px API
+          _500px.init({
+            sdk_key: '242d8f6e6fe954036a4d0f1ee222fca48181e704'
+          });
+
+          var api_call_url = "photos/search?geo=" + position.coords.latitude + "," + position.coords.longitude + ",20<km>"
+
+          _500px.api(api_call_url, function (response) {
+            console.log(response.data.photos);
+          });
+
+
+        }
       }
 
       function buildMap(pos,map){
