@@ -52,15 +52,18 @@
 
       function fetchImages(lat,lng){
         // 500px API
-        _500px.init({
-          sdk_key: '242d8f6e6fe954036a4d0f1ee222fca48181e704'
+
+        var api_call_url = "https://api.500px.com/v1/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",20km"
+
+        // _500px.api(api_call_url, function (response) {
+        //   console.log(response.data.photos);
+        // });
+
+        $.get( api_call_url, function( data ) {
+          console.log( data );
+          alert( "Load was performed." );
         });
 
-        var api_call_url = "/photos/search?consumer_key=wpPbFbHMVIuEjBGXXetIuSKeXgvoV33IwluXvqGw&geo=" + lat + "," + lng + ",20km"
-
-        _500px.api(api_call_url, function (response) {
-          console.log(response.data.photos);
-        });
       }
 
 
